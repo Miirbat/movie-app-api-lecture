@@ -13,6 +13,15 @@ class Api::MoviesController < ApplicationController
     end 
   end
 
+  def destroy 
+    @movie = Movie.find_by(id: params[:id])
+    if @movie && @movie.destroy 
+      render status: 204
+    else 
+      render json: { errors: "Unable to delete this movie" }
+    end 
+  end
+
   private 
     def movie_params 
       params.require(:movie).permit(:title, :release_year)
